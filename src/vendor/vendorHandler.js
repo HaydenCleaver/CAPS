@@ -5,21 +5,26 @@ const Chance = require('chance');
 
 const chance = new Chance();
 
-setInterval(() => {
-    console.log('--------------------New Package!----------------------');
+function vendorOrder () {
 
-    let payload = {
-        store: chance.company(),
-        orderId: chance.guid(),
-        customer: chance.name(),
-        address: `${chance.city()}, ${chance.state()}`,
-    };
+        setTimeout(() => {
+        console.log('--------------------New Package!----------------------');
 
-    eventPool.emit('PICKUP', payload);
-}, 7000);
+        let payload = {
+            store: chance.company(),
+            orderId: chance.guid(),
+            customer: chance.name(),
+            address: `${chance.city()}, ${chance.state()}`,
+        };
 
-// module.exports = (payload) => {
-//     setTimeout(() => {
-//         console.log(`Thank you, ${payload.name}`);
-//     }, 2000);
-// }
+        eventPool.emit('PICKUP', payload);
+    }, 2000);
+}
+
+function vendorConfirmation(payload) {
+        setTimeout(() => {
+        console.log(`Thank you, ${payload.customer}`);
+    }, 4000);
+}
+
+module.exports = { vendorOrder, vendorConfirmation };

@@ -4,15 +4,32 @@ const Chance = require ('chance');
 
 const chance = new Chance();
 
-module.exports = (payload) => {
-  setTimeout(() => {
-    let event = {
-      time: chance.timestamp(),
-    };
+function logEvent(event, payload){
+  const date = chance.date();
+  const time = date.toDateString();
+  console.log('EVENT: ', { event, time, payload});
+}
 
-    console.log(event, payload);
-  }, 1000);
-};
+
+function pickUp(payload){
+  setTimeout(() => {
+    logEvent('PICKUP', payload);
+  }, 2000);
+}
+
+function inTransit(payload){
+  setTimeout(() => {
+    logEvent('IN_TRANSIT', payload);
+  }, 2000);
+}
+
+function delivered(payload){
+  setTimeout(() => {
+    logEvent('DELIVERED', payload);
+  }, 3000);
+}
+
+module.exports = {pickUp, inTransit, delivered};
 
 
 

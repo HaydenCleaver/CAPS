@@ -13,5 +13,5 @@ module.exports = (payload) => {
 
     console.log(`DRIVER: delivered ${payload.orderId}`);
     eventPool.emit('DELIVERED', payload);
-  }, 10000);
+  }, 6000);
 };
