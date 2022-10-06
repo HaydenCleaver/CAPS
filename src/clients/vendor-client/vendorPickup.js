@@ -1,19 +1,10 @@
 'use strict';
 
-const { io } = require('socket.io-client');
 const Chance = require('chance');
-const vendorLog = require('./vendorLog');
-const vendorConfirmation = require('./vendorConfirmation');
-
-const socket = io('http://localhost:3001/caps');
 
 const chance = new Chance();
 
-socket.on('PICKUP', vendorLog);
-socket.on('DELIVERED', vendorConfirmation);
-
-setInterval(() => {
-
+function vendorPickup (socket) {
   let payload = {
     store: chance.company(),
     orderId: chance.guid(),
@@ -22,7 +13,8 @@ setInterval(() => {
   };
 
   socket.emit('JOIN', `${payload.store}`);
-
   console.log('-------transmitting new package---------');
   socket.emit('PICKUP', payload);
-}, 5000);
+}
+
+module.exports = vendorPickup;
